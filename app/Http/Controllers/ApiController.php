@@ -12,7 +12,14 @@ class ApiController extends Controller
     public function index()
     {
         $pegawai = DB::select('SELECT public."select_data"()');
-        return $pegawai;
+        $isi = str_replace(['(', ')'], '', $pegawai[0]->select_data);
+        $array = explode(',', $isi);
+        $data = array(
+            "nama" => $array[0],
+            "nip" => $array[1]
+        );
+        dd($data);
+        // dd($pegawai[0]->select_data);
     }
     public function nama($id)
     {
