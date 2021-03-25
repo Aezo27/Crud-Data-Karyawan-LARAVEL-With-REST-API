@@ -14,7 +14,7 @@ class PegawaiController extends Controller
     { 
         $client = new \GuzzleHttp\Client(['base_uri' => 'http://localhost:8001']);
         $request = $client->get('/api/data');
-        $response = json_decode($request->getBody()->getContents());
+        $pegawai = json_decode($request->getBody()->getContents());
         // dd($response);
         // $pegawai = Data_pegawai::all();
         return view('crud.index', compact('pegawai'));
