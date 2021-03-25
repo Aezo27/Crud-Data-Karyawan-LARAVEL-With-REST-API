@@ -53,16 +53,8 @@ class PegawaiController extends Controller
     }
     public function delete_data(Request $request, $id){
         $client = new Client(['base_uri' => 'http://localhost:8001']);
-        $response = $client->request('delete', 'api/tambah-data', ['form_params' => [
-            'nama' => $request->nama,
-            'nip' => $request->nip,
-            'alamat' => $request->alamat,
-            'kelamin' => $request->kelamin,
-            'divisi' => $request->divisi,
-        ]]);
-        $pegawai = Data_pegawai::where('id',$id)->firstOrFail();
-        $cek = $pegawai->delete();
-        if ($pegawai) {
+        $response = $client->request('delete', 'api/hapus/'.$id);
+        if ($response) {
              return back()->with([
                 'notif'     => 'data berhasil dihapus',
                 'alert'     => 'success'
@@ -89,15 +81,16 @@ class PegawaiController extends Controller
             'divisi' => 'required',
         ]);
  
-        $pegawai = Data_pegawai::where('id',$request->id)->firstOrFail();
-        $pegawai->update([
+        $client = new Client(['base_uri' => 'http://localhost:8001']);
+        $response = $client->request('PUT', 'api/update-data', ['form_params' => [
+            'id' => $request->id,
             'nama' => $request->nama,
             'nip' => $request->nip,
             'alamat' => $request->alamat,
-            'jenis_kelamin' => $request->kelamin,
+            'kelamin' => $request->kelamin,
             'divisi' => $request->divisi,
-        ]);
-        if ($pegawai) {
+        ]]);
+        if ($response) {
             return redirect('/')->with([
                 'notif'     => 'data berhasil diubah',
                 'alert'     => 'success'
