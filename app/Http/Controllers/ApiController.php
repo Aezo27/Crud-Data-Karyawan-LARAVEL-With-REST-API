@@ -22,7 +22,8 @@ class ApiController extends Controller
                     "nip" => $array[1],
                     "alamat" => $array[2],
                     "jenis_kelamin" => $array[3],
-                    "divisi" => $array[4]
+                    "divisi" => $array[4],
+                    "id" => $array[5]
                 );
             $final[] = $data;
         }
