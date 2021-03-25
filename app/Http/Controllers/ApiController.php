@@ -18,7 +18,7 @@ class ApiController extends Controller
             "nama" => $array[0],
             "nip" => $array[1]
         );
-        dd($data);
+        dd($data['nama']);
         // dd($pegawai[0]->select_data);
     }
     public function nama($id)
