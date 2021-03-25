@@ -19,11 +19,14 @@ class ApiController extends Controller
             $array = explode(',', $isi);
             $data = array(
                     "nama" => $array[0],
-                    "nip" => $array[1]
+                    "nip" => $array[1],
+                    "alamat" => $array[2],
+                    "jenis_kelamin" => $array[3],
+                    "divisi" => $array[4]
                 );
             $final[] = $data;
         }
-        return $final;
+        return json_encode($final);
     }
     public function nama($id)
     {

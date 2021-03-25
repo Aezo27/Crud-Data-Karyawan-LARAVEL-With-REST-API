@@ -12,11 +12,11 @@ class PegawaiController extends Controller
 {
     public function index()
     { 
-        // $client = new \GuzzleHttp\Client(['base_uri' => 'http://localhost:8001']);
-        // $request = $client->get('/api/data');
-        // $response = $request->getBody()->getContents();
+        $client = new \GuzzleHttp\Client(['base_uri' => 'http://localhost:8001']);
+        $request = $client->get('/api/data');
+        $response = json_decode($request->getBody()->getContents());
         // dd($response);
-        $pegawai = Data_pegawai::all();
+        // $pegawai = Data_pegawai::all();
         return view('crud.index', compact('pegawai'));
     }
     public function tambah()
