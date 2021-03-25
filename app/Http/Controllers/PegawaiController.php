@@ -12,12 +12,12 @@ class PegawaiController extends Controller
 {
     public function index()
     { 
-        $client = new \GuzzleHttp\Client();
-        $request = $client->get('http://127.0.0.1/api/data');
-        $response = $request->getBody();
-        dd($response);
-        // $pegawai = Data_pegawai::all();
-        // return view('crud.index', compact('pegawai'));
+        // $client = new \GuzzleHttp\Client(['base_uri' => 'http://localhost:8001']);
+        // $request = $client->get('/api/data');
+        // $response = $request->getBody()->getContents();
+        // dd($response);
+        $pegawai = Data_pegawai::all();
+        return view('crud.index', compact('pegawai'));
     }
     public function tambah()
     {
@@ -31,15 +31,15 @@ class PegawaiController extends Controller
             'kelamin' => 'required',
             'divisi' => 'required',
         ]);
- 
-        $pegawai = Data_pegawai::insert([
-            'nama' => $request->nama,
-            'nip' => $request->nip,
-            'alamat' => $request->alamat,
-            'jenis_kelamin' => $request->kelamin,
-            'divisi' => $request->divisi,
-        ]);
-        if ($pegawai) {
+            $client = new Client(['base_uri' => 'http://localhost:8001']);
+            $response = $client->request('POST', 'api/tambah-data', ['form_params' => [
+                'nama' => $request->nama,
+                'nip' => $request->nip,
+                'alamat' => $request->alamat,
+                'kelamin' => $request->kelamin,
+                'divisi' => $request->divisi,
+            ]]);
+        if ($response) {
             return redirect('/')->with([
                 'notif'     => 'data berhasil ditambahkan',
                 'alert'     => 'success'
@@ -52,7 +52,14 @@ class PegawaiController extends Controller
         } 
     }
     public function delete_data(Request $request, $id){
- 
+        $client = new Client(['base_uri' => 'http://localhost:8001']);
+        $response = $client->request('delete', 'api/tambah-data', ['form_params' => [
+            'nama' => $request->nama,
+            'nip' => $request->nip,
+            'alamat' => $request->alamat,
+            'kelamin' => $request->kelamin,
+            'divisi' => $request->divisi,
+        ]]);
         $pegawai = Data_pegawai::where('id',$id)->firstOrFail();
         $cek = $pegawai->delete();
         if ($pegawai) {
