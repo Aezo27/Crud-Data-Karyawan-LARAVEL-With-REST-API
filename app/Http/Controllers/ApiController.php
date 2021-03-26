@@ -12,7 +12,7 @@ class ApiController extends Controller
     public function index()
     {
         $pegawai = DB::select('SELECT public."select_data"()');
-        return $pegawai;
+        return json_encode($pegawai[0]->select_data);
     }
     public function nama($id)
     {
