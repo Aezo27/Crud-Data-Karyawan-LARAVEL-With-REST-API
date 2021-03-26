@@ -1,0 +1,16 @@
+CREATE OR REPLACE FUNCTION "public"."select_data"()
+  RETURNS TABLE("nama" varchar, "nip" varchar, "alamat" varchar, "jenis_kelamin" varchar, "divisi" varchar, "id" int4) AS $BODY$
+BEGIN
+    RETURN QUERY SELECT
+        data_pegawais.nama,
+        data_pegawais.nip,
+				data_pegawais.alamat,
+				data_pegawais.jenis_kelamin,
+				data_pegawais.divisi,
+				data_pegawais."id"
+    FROM
+        data_pegawais;
+END; $BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100
+  ROWS 1000

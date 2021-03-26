@@ -14,13 +14,10 @@ class PegawaiController extends Controller
     { 
         $client = new \GuzzleHttp\Client(['base_uri' => 'http://localhost:8001']);
         $request = $client->get('/api/data');
-        $response = $request->getBody()->getContents();
-        $json = file_get_contents($response);
-        $result = utf8_encode($json);
-	    $data = json_decode($result);
-        dd($data);
+        $pegawai = json_decode($request->getBody()->getContents());
+        // dd($response);
         // $pegawai = Data_pegawai::all();
-        // return view('crud.index', compact('pegawai'));
+        return view('crud.index', compact('pegawai'));
     }
     public function tambah()
     {
