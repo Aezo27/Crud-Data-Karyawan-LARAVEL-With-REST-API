@@ -20,6 +20,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/data', [ApiController::class, 'index'])->name('home');
 Route::post('/tambah-data', [ApiController::class, 'tambah_data'])->name('tambah_data');
-Route::delete('/hapus/{id}', [ApiController::class, 'delete_data']);
+Route::delete('/hapus-data/{id}', [ApiController::class, 'delete_data']);
 Route::put('/update-data', [ApiController::class, 'update_data'])->name('edit_data');
 Route::get('/nama/{id}', [ApiController::class, 'nama'])->name('nama');

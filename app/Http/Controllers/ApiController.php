@@ -15,15 +15,15 @@ class ApiController extends Controller
         
         $final = array();
         foreach ($pegawai as $peg) {
-            $isi = str_replace(['(', ')'], '', $peg->select_data);
+            $isi = str_replace(['(', ')', '"'], '', $peg->select_data);
             $array = explode(',', $isi);
             $data = array(
+                    "id" => $array[5],
                     "nama" => $array[0],
                     "nip" => $array[1],
                     "alamat" => $array[2],
                     "jenis_kelamin" => $array[3],
-                    "divisi" => $array[4],
-                    "id" => $array[5]
+                    "divisi" => $array[4]
                 );
             $final[] = $data;
         }
@@ -37,19 +37,20 @@ class ApiController extends Controller
         return $pegawai;
     }
     public function tambah_data(Request $request){
-        $validator = Validator::make($request->all(),[
-            'nama' => 'required',
-            'nip' => 'required',
-            'alamat' => 'required',
-            'kelamin' => 'required',
-            'divisi' => 'required',
-        ]);
-        $pegawai = DB::statement('SELECT public."insert_data"(:nama, :nip, :alamat, :kelamin, :divisi)', [
+        // $validator = Validator::make($request->all(),[
+        //     'nama' => 'required',
+        //     'nip' => 'required',
+        //     'alamat' => 'required',
+        //     // 'kelamin' => 'required',
+        //     // 'divisi' => 'required',
+        // ]);
+        // $pegawai = DB::statement('SELECT public."insert_data"(:nama, :nip, :alamat, :kelamin, :divisi)', [
+        $pegawai = DB::statement('SELECT public."insert_data"(:nama, :nip, :alamat)', [
             'nama' => $request->nama,
             'nip' => $request->nip,
             'alamat' => $request->alamat,
-            'kelamin' => $request->kelamin,
-            'divisi' => $request->divisi,
+            // 'kelamin' => $request->kelamin,
+            // 'divisi' => $request->divisi,
         ]);
         if ($pegawai) {
             return "Data berhasil ditambahkan";
