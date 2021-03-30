@@ -23,3 +23,5 @@ Route::post('/tambah-data', [ApiController::class, 'tambah_data'])->name('tambah
 Route::delete('/hapus-data/{id}', [ApiController::class, 'delete_data']);
 Route::put('/update-data', [ApiController::class, 'update_data'])->name('edit_data');
 Route::get('/nama/{id}', [ApiController::class, 'nama'])->name('nama');
+Route::get('/whatsapp', [ApiController::class, 'whatsapp'])->name('whatsapp');
+Route::put('/update-whatsapp', [ApiController::class, 'update_whatsapp'])->name('update_whatsapp');

@@ -29,13 +29,6 @@ class ApiController extends Controller
         }
         return json_encode($final);
     }
-    public function nama($id)
-    {
-        $pegawai = DB::select('SELECT public."nama"(:id)', [
-            'id' => $id,
-        ]);
-        return $pegawai;
-    }
     public function tambah_data(Request $request){
         // $validator = Validator::make($request->all(),[
         //     'nama' => 'required',
@@ -78,7 +71,7 @@ class ApiController extends Controller
             'kelamin' => 'required',
             'divisi' => 'required',
         ]);
-        $pegawai =  DB::statement('SELECT public."update_data"(:id ,:nama, :nip, :alamat, :kelamin, :divisi)', [
+        $pegawai =  DB::statement('SELECT public."update_data"(:id, :nama, :nip, :alamat, :kelamin, :divisi)', [
             'id' => $request->id,
             'nama' => $request->nama,
             'nip' => $request->nip,
@@ -92,5 +85,35 @@ class ApiController extends Controller
             return "Data gagal diubah";
         } 
     }
-    
+    public function whatsapp()
+    {
+        $pegawai = DB::select('SELECT public."whatsapp"()');
+        
+        $final = array();
+        foreach ($pegawai as $peg) {
+            $isi = str_replace(['(', ')', '"'], '', $peg->whatsapp);
+            $array = explode(',', $isi);
+            $data = array(
+                    "id" => $array[0],
+                    "nama" => $array[1],
+                    "nomor" => $array[2],
+                    "time" => $array[3],
+                    "status" => $array[4],
+                );
+            $final[] = $data;
+        }
+        return json_encode($final);
+    }
+    public function update_whatsapp(Request $request)
+    {
+        $pegawai =  DB::statement('SELECT public."update_wa"(:id, :stts)', [
+            'id' => $request->id,
+            'stts' => $request->stts,
+        ]);
+        if ($pegawai) {
+            return "Status berhasil diubah";
+        } else {
+            return "Status gagal diubah";
+        } 
+    }
 }
